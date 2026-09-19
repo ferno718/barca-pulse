@@ -1,0 +1,9 @@
+event_name,when_it_fires,key_parameters,GA4_use
+navigation_click,header/content navigation link clicked,link_text;link_url;nav_location,Understand navigation behaviour
+cta_click,important CTA clicked,cta_name;cta_location,Compare CTA engagement
+ticket_search,ticket form submitted,match_name;ticket_quantity,Measure ticket intent
+newsletter_signup,newsletter form submitted,signup_location,Measure lead engagement
+site_search,news search submitted,search_term,Understand content demand
+view_item,product View clicked,item_name;price;currency,Ecommerce product interest
+add_to_cart,Add to cart clicked,item_name;price;quantity,Measure shopping intent
+purchase,demo purchase clicked,transaction_id;value;currency;item_name,Build demo conversion funnel

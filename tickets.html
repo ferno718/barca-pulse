@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tickets | Barça Pulse Analytics Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Tag Manager -->
+  <script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
+  <!-- End Google Tag Manager -->
+</head><div class="topbar"><div class="container"><span>BARÇA PULSE • WEB ANALYTICS DEMO</span><span>Independent student project</span></div></div>
+<nav class="nav"><div class="container nav-inner">
+  <a class="brand" href="index.html" data-nav="header"><span class="crest">BP</span><span>BARÇA PULSE</span></a>
+  <button class="menu-btn">☰</button>
+  <div class="nav-links">
+    <a href="matches.html" data-nav="header">Matches</a>
+    <a href="team.html" data-nav="header">Team</a>
+    <a href="news.html" data-nav="header">News</a>
+    <a href="tickets.html" data-nav="header">Tickets</a>
+    <a href="shop.html" data-nav="header">Shop</a>
+    <a class="btn btn-primary" href="tickets.html" data-nav="header" data-cta="Get Tickets" data-location="header">Get Tickets</a>
+  </div>
+</div></nav>
+<section class="page-hero"><div class="container"><div class="kicker">Matchday</div><h1>Find your seat</h1><p>Use the form to simulate ticket discovery behaviour. No real purchase is made.</p></div></section>
+<section class="section"><div class="container" style="max-width:850px">
+  <div class="card">
+    <div class="notice">Analytics learning point: this form sends a <b>ticket_search</b> event with match and quantity parameters.</div>
+    <form id="ticketForm" class="form" style="margin-top:22px">
+      <div class="field"><label>Match</label><select name="match"><option>Barça vs Rivals FC</option><option>Barça vs European XI</option><option>City United vs Barça</option></select></div>
+      <div class="field"><label>Ticket quantity</label><select name="quantity"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+      <button class="btn btn-primary" type="submit">Search tickets</button>
+    </form>
+  </div>
+</div></section>
+<div id="toast" class="toast"></div>
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="brand"><span class="crest">BP</span><span>BARÇA PULSE</span></div>
+      <p class="muted">A student web-analytics project inspired by FC Barcelona's visual language. This is an independent demo and is not the official club website.</p>
+    </div>
+    <div><div class="footer-title">Explore</div><div class="footer-links">
+      <a href="index.html">Home</a><a href="matches.html">Matches</a><a href="news.html">News</a><a href="team.html">Team</a>
+    </div></div>
+    <div><div class="footer-title">Commerce</div><div class="footer-links">
+      <a href="tickets.html">Tickets</a><a href="shop.html">Shop</a>
+    </div></div>
+    <div><div class="footer-title">Stay updated</div>
+      <form id="newsletter" class="form"><input name="email" type="email" placeholder="Email address" required><button class="btn btn-primary" type="submit">Subscribe</button></form>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body></html>
