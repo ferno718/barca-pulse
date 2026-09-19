@@ -15,13 +15,15 @@ window.demoCart = [];
 document.addEventListener("DOMContentLoaded", () => {
 
   // Navigation clicks
-  document.querySelectorAll("[data-nav]").forEach(link => {
-    link.addEventListener("click", () => {
-      trackEvent("navigation_click", {
-        link_text: link.textContent.trim(),
-        link_url: link.getAttribute("href"),
-        nav_location: link.dataset.nav
-      });
+  document.addEventListener("click", e => {
+    const link = e.target.closest("a[data-nav]");
+
+    if (!link) return;
+
+    trackEvent("navigation_click", {
+      link_text: link.textContent.trim(),
+      link_url: link.getAttribute("href"),
+      nav_location: link.dataset.nav
     });
   });
 
