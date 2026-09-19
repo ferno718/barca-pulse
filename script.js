@@ -1,6 +1,4 @@
-
 // FC Barcelona-inspired Web Analytics Demo
-// Replace GTM-XXXXXXX with your real GTM container ID in every HTML page.
 
 window.dataLayer = window.dataLayer || [];
 
@@ -11,7 +9,11 @@ function trackEvent(eventName, params = {}) {
   });
 }
 
+// Simple demo cart
+window.demoCart = [];
+
 document.addEventListener("DOMContentLoaded", () => {
+
   // Navigation clicks
   document.querySelectorAll("[data-nav]").forEach(link => {
     link.addEventListener("click", () => {
@@ -35,92 +37,169 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Product view / add to cart
   document.querySelectorAll("[data-product]").forEach(card => {
+
     const product = card.dataset.product;
     const price = Number(card.dataset.price || 0);
 
+    // View product
     const viewBtn = card.querySelector("[data-view-product]");
+
     if (viewBtn) {
       viewBtn.addEventListener("click", () => {
+
         trackEvent("view_item", {
           currency: "EUR",
           value: price,
-          items: [{ item_name: product, price }]
+          items: [
+            {
+              item_name: product,
+              price: price,
+              quantity: 1
+            }
+          ]
         });
+
         toast("Product view tracked");
       });
     }
 
+    // Add to cart
     const cartBtn = card.querySelector("[data-add-cart]");
+
     if (cartBtn) {
       cartBtn.addEventListener("click", () => {
+
+        const cartItem = {
+          item_name: product,
+          price: price,
+          quantity: 1
+        };
+
+        // Store the actual selected product
+        window.demoCart = [cartItem];
+
         trackEvent("add_to_cart", {
           currency: "EUR",
           value: price,
-          items: [{ item_name: product, price, quantity: 1 }]
+          items: [cartItem]
         });
-        toast("Add-to-cart event sent");
+
+        toast(product + " added to cart");
       });
     }
   });
 
   // Ticket form
   const ticketForm = document.querySelector("#ticketForm");
+
   if (ticketForm) {
     ticketForm.addEventListener("submit", e => {
+
       e.preventDefault();
+
       const match = ticketForm.querySelector("[name=match]").value;
-      const qty = Number(ticketForm.querySelector("[name=quantity]").value);
+      const qty = Number(
+        ticketForm.querySelector("[name=quantity]").value
+      );
+
       trackEvent("ticket_search", {
         match_name: match,
         ticket_quantity: qty
       });
+
       toast("Ticket search tracked");
     });
   }
 
   // Newsletter
   const newsletter = document.querySelector("#newsletter");
+
   if (newsletter) {
     newsletter.addEventListener("submit", e => {
+
       e.preventDefault();
+
       trackEvent("newsletter_signup", {
         signup_location: "footer"
       });
+
       toast("Newsletter signup tracked");
+
       newsletter.reset();
     });
   }
 
   // Search
   const searchForm = document.querySelector("#searchForm");
+
   if (searchForm) {
     searchForm.addEventListener("submit", e => {
+
       e.preventDefault();
+
       const term = searchForm.querySelector("input").value.trim();
-      trackEvent("site_search", { search_term: term });
+
+      trackEvent("site_search", {
+        search_term: term
+      });
+
       toast("Search event tracked");
     });
   }
 
-  // Demo purchase
+  // Purchase
   document.querySelectorAll("[data-purchase]").forEach(btn => {
+
     btn.addEventListener("click", () => {
+
+      // Check whether an item was added to cart
+      if (window.demoCart.length === 0) {
+        toast("Please add a product to cart first");
+        return;
+      }
+
+      // Get the actual item added to cart
+      const cartItems = window.demoCart;
+
+      // Calculate total value
+      const totalValue = cartItems.reduce(
+        (total, item) =>
+          total + (item.price * item.quantity),
+        0
+      );
+
       trackEvent("purchase", {
+
         transaction_id: "DEMO-" + Date.now(),
+
         currency: "EUR",
-        value: Number(btn.dataset.value || 99),
-        items: [{ item_name: btn.dataset.item || "Demo item", price: Number(btn.dataset.value || 99), quantity: 1 }]
+
+        value: totalValue,
+
+        items: cartItems
+
       });
-      toast("Demo purchase event tracked");
+
+      toast("Purchase event tracked");
+
+      // Clear cart after purchase
+      window.demoCart = [];
     });
   });
 
   // Mobile nav
   const menuBtn = document.querySelector(".menu-btn");
   const navLinks = document.querySelector(".nav-links");
+
   if (menuBtn && navLinks) {
+
     menuBtn.addEventListener("click", () => {
-      navLinks.style.display = navLinks.style.display === "flex" ? "none" : "flex";
+
+      navLinks.style.display =
+        navLinks.style.display === "flex"
+          ? "none"
+          : "flex";
+
       navLinks.style.flexDirection = "column";
       navLinks.style.position = "absolute";
       navLinks.style.top = "62px";
@@ -132,11 +211,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
 function toast(message) {
+
   const el = document.querySelector("#toast");
+
   if (!el) return;
+
   el.textContent = message;
   el.style.display = "block";
+
   clearTimeout(window.__toastTimer);
-  window.__toastTimer = setTimeout(() => el.style.display = "none", 2200);
+
+  window.__toastTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, 2200);
 }
